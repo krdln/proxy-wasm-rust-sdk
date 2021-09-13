@@ -114,9 +114,11 @@ pub trait Context {
         hostcalls::get_map_value_bytes(MapType::HttpCallResponseTrailers, name).unwrap()
     }
 
+    /// Dispatches grpc call. Upstream name should be either envoy's cluster name or serialized
+    /// GrpcService message.
     fn dispatch_grpc_call(
         &self,
-        upstream_name: &str,
+        upstream_name: &[u8],
         service_name: &str,
         method_name: &str,
         initial_metadata: Vec<(&str, &[u8])>,
